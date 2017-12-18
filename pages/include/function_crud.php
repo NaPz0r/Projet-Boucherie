@@ -1,6 +1,8 @@
 <?php
 
 // require "config.php";
+
+
 $message = false;
 $bdd = connectToDatabase();
 
@@ -9,6 +11,10 @@ $bdd = connectToDatabase();
 */
 // $remi = connectToDatabase();
 // var_dump($remi);
+// cryptPassword("Mike");
+
+
+
 
 function connectToDatabase(){ 
     
@@ -48,12 +54,28 @@ function registerClient($client){
         ":email" => $client["email"], 
         ":firstname" => $client["firstname"],
         ":phone" => $client["phonenumber"],
-        ":encrypte" => $client["password"]
+        ":encrypte" => crytPassword($client["password"])
     );
 
     $request->execute($array);
 
     return $GLOBALS["bdd"]->lastInsertId();
 }
+
+function cryptPassword($password){
+    
+    $crypt = sha1(rand(11,22)."Mike".uniqid()."Mike".rand(11,22));
+    $newpassword = crypt($password, $crypt);
+    return crypt($password, $crypt);
+
+}
+// Possibilité de rajouter un catcha au bout de X tentatives ou bannir une IP si trop d'essais.
+function comparePassword($hash_password, $password){
+
+    return (hash_equals($hashed_password, crypt($password, $hashed_password))) ? true : false;
+
+}
+
+
 
 ?>
