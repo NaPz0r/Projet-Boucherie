@@ -1,4 +1,7 @@
 <?php
+        session_start();
+        if(isset($_SESSION["User"]))
+            header('Location: index.php'); // Fait une redirection vers la page index.php en PHP
         require_once "include/config.php";        
         $message = "";
 
@@ -43,9 +46,12 @@
                 }
 
                 if($retour == true){
-                    $test = registerClient($_POST);
-                    var_dump($test);
-                    header('Location: index.html');
+                    $id = registerClient($_POST); // Register user
+                    // var_dump($test);
+                    $_POST["idClients"] = $id; // Add id to array POST
+                    unset($_POST["password"]); // Delete password to array
+                    $_SESSION["User"] = $_POST; // Create session user
+                    header('Location: index.php'); // Redirection
                     exit;
                 }
             endif;

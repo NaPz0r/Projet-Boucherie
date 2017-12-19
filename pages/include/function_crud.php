@@ -104,8 +104,16 @@ function connectUser($email, $password){
     if (!comparePassword($user["encrypte"], $password))
         return -2;
 
-    unset($user["encrypte"]); // Supprime un élément d'un Array
+    unset($user["encrypte"]); // Supprime un élément d'un Array, ici le mot de pass
     return $user;
 }
+
+function logOut(){
+    setcookie("User", "", time()-3000); // Création d'un cookie en PHP
+    unset($_COOKIE["User"]);    
+    unset($_SESSION);
+    session_destroy();
+}
+
 
 ?>

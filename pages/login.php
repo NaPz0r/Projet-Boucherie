@@ -1,3 +1,11 @@
+<?php 
+    require("include/function_crud.php");
+    session_start();
+    logOut();
+    if(isset($_SESSION["User"]))
+        header('Location: index.php'); // Fait une redirection vers la page index.php en PHP
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +14,6 @@
 </head>
 
 <body>
-
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -108,10 +115,17 @@ $("form").submit(function(e){
         });
 
         request.done(function(user) {
-            if(user.error)
+            if(user.error){
+                $("#message").text(user.message);
                 console.warn(user);
-            else
+            }
+            else{ // Convertir un objet PHP en JSON
+                var date = new Date();
+                date.setTime( date.getTime() + (2 * 24 * 60 * 60 * 1000) )
+                document.cookie = "User="+JSON.stringify(user)+"; expires="+date.toUTCString();
+                window.location.href = "index.php";
                 console.info(user);
+            }
         });
 
         request.fail(function( jqXHR, textStatus ) {
