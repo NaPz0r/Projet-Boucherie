@@ -1,5 +1,5 @@
 <?php
-
+    header("Acces-Control-Allow-Origin: *");
     require_once "function_crud.php";
     
     if (!empty($_POST)){
@@ -10,18 +10,22 @@
             $user = connectUser(trim($_POST["email"]), trim($_POST["password"]));
 
             if($user == -1){
-                $array["message"] = "Utilisateur inconnu";
+                $retour["message"] = "Utilisateur inconnu";
+
             }elseif($user == -2){
-                $array["message"] = "Email ou password incorrects";
+                $retour["message"] = "Email ou password incorrects";
+                
             }else{
-                $array["error"] = false;
-                $array["user"] = $user;
+                $retour["error"] = false;
+                $retour["user"] = $user;
             }
-            echo json.encode($retour);
+            echo json_encode($retour);
         }
         else
-            echo "Ma bite est noire et grosse !!!!!!";
+            echo "test1";
     }
     else
-        echo "Ma bite!!!!!!";
+        echo "test2";
+
+        // Pour debug, aller voir dans Network -> api.php
 ?>

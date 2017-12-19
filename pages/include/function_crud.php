@@ -6,6 +6,9 @@
 $message = false;
 $bdd = connectToDatabase();
 
+// $hashed_password = cryptPassword("test");
+// $verif = comparePassword($hashed_password, "test");
+// var_dump($verif);
 /*
     Test unitaire
 */
@@ -37,7 +40,7 @@ function emailExist($email){
     
     $request->execute(Array($email)); // Execute la requête en remplaçant les ? par les datas du tableau
     
-    $array = $request->fetchAll(PDO::FETCH_ASSOC); //Trie des données
+    $array = $request->fetchAll(PDO::FETCH_ASSOC); //Tri des données
     
     return (bool)$array[0]["Nb"]; // Cast le tableau en booléen (retourne oui ou non)
 
@@ -68,7 +71,7 @@ function cryptPassword($password){
     return crypt($password, $crypt);
 }
 // Possibilité de rajouter un catcha au bout de X tentatives ou bannir une IP si trop d'essais.
-function comparePassword($hash_password, $password){
+function comparePassword($hashed_password, $password){
 
     return (hash_equals($hashed_password, crypt($password, $hashed_password))) ? true : false;
 

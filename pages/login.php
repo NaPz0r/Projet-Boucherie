@@ -42,7 +42,7 @@
         </div>
     </div>
 
-<?php require("page_include/footer.php");?> 
+<?php require("page_include/footer.php");?>
 
 <script>
 
@@ -63,7 +63,7 @@
 //     test = true;
 //     var expression = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
 
-//     if(validateEmail("#mailform").val()){      
+//     if(validateEmail("#mailform").val()){
 //         console.log("Mail correct");
 //     } else{
 //         alert("Email is not correct format return false.");
@@ -82,18 +82,21 @@ $("form").submit(function(e){
     e.preventDefault();
     let error = false;
 
-    if($("#mailform").val().trim() == ""){
+    if($("#mailform").val().trim() == ""){ // Vérif si le mail est vide, erreur = vraie si oui
         $("#message").append("<p>Veuillez remplir votre email</p>");
         error = true;
     }
-    if($("#passform").val().trim() == ""){
+    if($("#passform").val().trim() == ""){ // Vérif si le pass est vide, erreur = vraie si oui
         $("#message").append("<p>Veuillez remplir votre pass</p>");
         error = true;
     }
     var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if(!expr.test($("#mailform").val().trim().toLowerCase())){
+    if(!expr.test($("#mailform").val().trim().toLowerCase())){ // Vérif si le regex n'est pas bon, erreur = vraie si oui
         $("#message").append("<p>Veuillez remplir votre email</p>");
-        error = true;   
+
+        error = true;
+    } else {
+        console.log($("#mailform").val());
     }
 
     if(!error){
@@ -104,15 +107,15 @@ $("form").submit(function(e){
         dataType: "json"
         });
 
-        request.done(function( user ) {
+        request.done(function(user) {
             if(user.error)
-                console.warn(user.message)
+                console.warn(user);
             else
-                console.info(user)
+                console.info(user);
         });
 
         request.fail(function( jqXHR, textStatus ) {
-        alert( "Request failed: " + textStatus );
+            alert( "Request failed: " + textStatus );
         });
     }
 })
